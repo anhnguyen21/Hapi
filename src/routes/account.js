@@ -15,12 +15,16 @@ var apiRoutes = [
         method: 'GET',
         path: '/',
         handler: ctl.account.getHello,
+        options: {
+            tags: ['api', 'v1'],
+        }
     },{
         method: 'GET',
         path: '/account/{user}',
         handler: ctl.account.getName,
 
         options: {
+            tags: ['api', 'v1'],
             validate: {
                 params: Joi.object({ // Tạo đối tương trong trong routes
                     user: Joi.string().min(1).max(10) // Kiểm tra giá trị nhâp vào trên thanh tìm kiếm
@@ -47,6 +51,7 @@ var apiRoutes = [
         path: '/shop/{id}',
         handler: ctl.shop.getShop,
         options: {
+            tags: ['api', 'v1'],
             validate: {
                 params: Joi.object({ // Tạo đối tương trong trong routes
                     id: Joi.string().min(1).max(10) // Kiểm tra giá trị nhâp vào trên thanh tìm kiếm
@@ -57,19 +62,29 @@ var apiRoutes = [
         method: 'POST',
         path: '/user',
         handler: ctl.account.addUser,
+        options: {
+            tags: ['api', 'v1'],
+        }
     },{
         method: 'DELETE',
         path: '/user/{id}',
         handler: ctl.account.deleteUser,
+        options: {
+            tags: ['api', 'v1'],
+        }
     },{
         method: 'PUT',
         path: '/user/{id}',
         handler: ctl.account.updateUser,
+        options: {
+            tags: ['api', 'v1'],
+        }
     },{
         method: 'GET',
         path: '/user',
         options: {
-            auth: 'simple'
+            auth: 'simple',
+            tags: ['api', 'v1'],
         },
         handler: function (request, h) {
 
@@ -82,5 +97,8 @@ var apiRoutes = [
         //     auth: 'simple'
         // },
         handler: ctl.account.checkUser,
+        options: {
+            tags: ['api', 'v1'],
+        }
     }];
 module.exports = apiRoutes;

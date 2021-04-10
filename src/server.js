@@ -3,7 +3,10 @@
 const Hapi = require('@hapi/hapi');
 const Bcrypt = require('bcrypt');
 const setupDb = require('./database/setup');
-const jwt = require('jsonwebtoken');
+const HapiSwagger = require('hapi-swagger');
+const Inert = require('@hapi/inert');
+const Vision = require('@hapi/vision');
+const Pack = require('../package.json');
 const User = require('./database/models/accounts');
 
 const validate = async (request, username, password) => {
@@ -29,6 +32,21 @@ const init = async () => {
     });
 
     await server.register(require('@hapi/basic'));
+    const swaggerOptions = {
+        info: {
+                title: 'Test Hapi',
+                version: Pack.version,
+            },
+        };
+
+    await server.register([
+        Inert,
+        Vision,
+        {
+            plugin: HapiSwagger,
+            options: swaggerOptions
+        }
+    ]);
 
     server.auth.strategy('simple', 'basic', { validate });
 
